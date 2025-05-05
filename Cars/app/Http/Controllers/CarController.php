@@ -111,19 +111,13 @@ class CarController extends Controller
     }
 
     /**
-     * Retourne le nombre de voitures françaises en BDD
+     * Retourne le nombre de voitures d'une nationalité donnée en BDD
+     * @param string $nationality
+     * @return int
      */
-    public function count_fr()
+    public function count_nationality($nationality)
     {
-        return Car::where('country', '=', 'FR')->count();
-    }
-
-    /**
-     * Retourne le nombre de voitures étrangères en BDD
-     */
-    public function count_strangers()
-    {
-        return Car::where('country', '!=', 'FR')->count();
+        return Car::where('country', '=', $nationality)->count();
     }
 
     /**
