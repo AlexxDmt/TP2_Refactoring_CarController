@@ -12,22 +12,20 @@ class CarController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param int $id
      * @return Response
      */
     public function index()
     {
-        $v = Car::all();
-        $c = $v->where('country', 'FR')->count(); // retourne le décompte des voitures françaises uniquement
-        $p = $this->title;
+        $cars = Car::all();
+        $frenchCars = $cars->where('country', 'FR')->count(); // retourne le décompte des voitures françaises uniquement
+        $title = $this->title;
 
-        return view('cars.index', compact('v', 'c', 'p'));
+        return view('cars.index', compact('cars', 'frenchCars', 'title'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param int $id
      * @return Response
      */
     public function create()
@@ -38,15 +36,14 @@ class CarController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param int $id
      * @return Response
      */
     public function store()
     {
-        $o = new Car();
-        $o->title = request('nom');
-        $o->description = request('description');
-        $o->save();
+        $car = new Car();
+        $car->title = request('nom');
+        $car->description = request('description');
+        $car->save();
 
         return redirect('/cars');
     }
@@ -83,10 +80,10 @@ class CarController extends Controller
      */
     public function update($id)
     {
-        $my_car = Car::find($id);
-        $my_car->title = request('title');
-        $my_car->description = request('description');
-        $my_car->save();
+        $car = Car::find($id);
+        $car->title = request('title');
+        $car->description = request('description');
+        $car->save();
 
         return redirect('/cars');
     }
@@ -99,8 +96,8 @@ class CarController extends Controller
      */
     public function destroy($id)
     {
-        $del = Car::find($id);
-        $del->delete();
+        $car = Car::find($id);
+        $car->delete();
 
         return redirect('/cars');
     }
