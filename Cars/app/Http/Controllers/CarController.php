@@ -36,13 +36,19 @@ class CarController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param Request $request
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+        ]);
+
         $car = new Car();
-        $car->title = request('nom');
-        $car->description = request('description');
+        $car->title = $validatedData['nom'];
+        $car->description = $validatedData['description'];
         $car->save();
 
         return redirect('/cars');
@@ -75,14 +81,20 @@ class CarController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param int $id
+     * @param Request $request
+     * @param int $id id of the resource to update
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+        ]);
+
         $car = Car::findOrFail($id);
-        $car->title = request('title');
-        $car->description = request('description');
+        $car->title = $validatedData['title'];
+        $car->description = $validatedData['description'];
         $car->save();
 
         return redirect('/cars');
