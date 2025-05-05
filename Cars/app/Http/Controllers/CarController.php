@@ -119,12 +119,4 @@ class CarController extends Controller
     {
         return Car::where('country', '=', $nationality)->count();
     }
-
-    /**
-     * Retourne le nombre de voitures belges en BDD, à garder pour une éventuelle réutilisation
-     */
-    // public function count_belgium()
-    // {
-    //     return Car::where('country', '=', 'BE')->count();
-    // }
 }
